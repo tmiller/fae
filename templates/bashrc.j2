@@ -8,13 +8,6 @@ if [ -e "${HOME}/.asdf/asdf.sh" ]; then
   . ${HOME}/.asdf/completions/asdf.bash
 fi
 
-# Ruby
-chruby_file="/usr/local/share/chruby/chruby.sh"
-if [ -e "${chruby_file}" ]; then
-  source "${chruby_file}"
-  chruby ruby
-fi
-
 # Python
 vew_file="/usr/local/bin/virtualenvwrapper.sh"
 if [ -e "${vew_file}" ]; then
@@ -35,11 +28,6 @@ fi
 export GPG_TTY=$(tty)
 
 # Node
-chnode_file="/usr/local/bin/chnode"
-if [ -e "${chnode_file}" ]; then
-  source "${chnode_file}"
-  NODES+=(~/nodes/*)
-fi
 if [ -e "~/.npmrc" ]; then
   export NPM_TOKEN=$(cat ~/.npmrc | awk -F'_authToken=' '{print $2}')
 fi
