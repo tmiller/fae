@@ -1,0 +1,9 @@
+---
+- name: install asdf
+  git:
+    repo: 'https://github.com/asdf-vm/asdf'
+    dest: "{{ansible_env.HOME}}/.asdf"
+    version: "{{ asdf_version }}"
+  tags:
+    - asdf
+    - pkg

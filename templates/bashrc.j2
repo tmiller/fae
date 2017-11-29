@@ -1,0 +1,45 @@
+########################
+# Programing Languages #
+########################
+
+# asdf
+if [ -e "${HOME}/.asdf/asdf.sh" ]; then
+  . ${HOME}/.asdf/asdf.sh
+  . ${HOME}/.asdf/completions/asdf.bash
+fi
+
+# Ruby
+chruby_file="/usr/local/share/chruby/chruby.sh"
+if [ -e "${chruby_file}" ]; then
+  source "${chruby_file}"
+  chruby ruby
+fi
+
+# Python
+vew_file="/usr/local/bin/virtualenvwrapper.sh"
+if [ -e "${vew_file}" ]; then
+  export WORKON_HOME="${HOME}/.pyenvs"
+  source "${vew_file}"
+fi
+
+# gpg-agent
+unset SSH_AGENT_PID
+if [ "${gnupg_SSH_AUTH_SOCK_by:-0}" -ne $$ ]; then
+  export SSH_AUTH_SOCK="${HOME}/.gnupg/S.gpg-agent.ssh"
+fi
+
+if ( ! [ -x /usr/local/bin/gpg ] ) && [ -x /usr/local/bin/gpg2 ]; then
+  alias gpg='gpg2'
+fi
+
+export GPG_TTY=$(tty)
+
+# Node
+chnode_file="/usr/local/bin/chnode"
+if [ -e "${chnode_file}" ]; then
+  source "${chnode_file}"
+  NODES+=(~/nodes/*)
+fi
+if [ -e "~/.npmrc" ]; then
+  export NPM_TOKEN=$(cat ~/.npmrc | awk -F'_authToken=' '{print $2}')
+fi

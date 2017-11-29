@@ -1,0 +1,240 @@
+---
+- name: Grammarie
+  hosts: all
+  connection: local
+
+  roles:
+    - faen.packages
+    - faen.less-pcre
+    - faen.bash
+    - faen.fzf
+    - faen.tmux
+    - faen.git
+    - faen.gpg
+    - faen.nvim
+    - asdf
+
+  tasks:
+    - name: install ~/.bashrc.d/todo
+      template:
+        src: templates/bashrc.j2
+        dest: ~/.bashrc.d/move-to-faen
+      tags:
+        - bash
+
+  vars:
+    packages_install:
+      - coreutils
+      - curl
+      - exa
+      - gdb
+      - gnu-sed
+      - gnu-tar
+      - jq
+      - mosh
+      - openssl
+      - packer
+      - readline
+      - ripgrep
+      - tavianator/tap/bfs
+      - tree
+      - watch
+      - wrk
+
+    packages_cask_install:
+      - alfred
+      - bartender
+      - dropbox
+      - iterm2
+      - xquartz
+
+    git_name: Tom Miller
+    git_email: jackerran@gmail.com
+
+    gpg_default_key: 0526A53451500B14C2C3E01568DFE95CAE3C2502
+    gpg_ssh_agent: True
+
+    asdf_version: v0.4.0
+
+    tmux_g_win_opt:
+      window-status-current-fg: white
+
+    tmux_g_opt:
+      status-bg: black
+      status-fg: blue
+      status-left: '#[fg=green]#H'
+      status-right: '#[fg=yellow]%A %v %l:%M %p'
+
+    tmux_plugins:
+      - tmux-plugins/tmux-pain-control
+      - tmux-plugins/tmux-resurrect
+      - tmux-plugins/tmux-sensible
+      - tmux-plugins/tmux-sessionist
+      - tmux-plugins/tmux-yank
+      - tmux-plugins/tpm
+
+    bash_env_vars:
+      - name: PROMPT
+        value: '__git_ps1 \"\[\033[1;34m\]\u\[\033[0m\] \[\033[36m\]\w\[\033[0m\]\" \"\n❯ \"'
+
+      - name: PROMPT_COMMAND
+        value: "history -a; history -c; history -r; $PROMPT"
+        export: true
+
+      - name: EDITOR
+        value: nvim
+        export: true
+
+      - name: FZF_DEFAULT_COMMAND
+        value: "rg --no-ignore --hidden --files --follow -g '!{.git,node_modules,vendor}'"
+        export: true
+
+      - name: FZF_CTRL_T_COMMAND
+        value: "rg --no-ignore --hidden --files --follow -g '!{.git,node_modules,vendor}'"
+        export: true
+
+      - name: FZF_ALT_C_COMMAND
+        value: "bfs \\( -path '*/vendor' -or -path '*/node_modules' \\) -prune -or -type d -nohidden"
+        export: true
+
+      - name: LESS
+        value: "-nFXR"
+        export: true
+
+      - name: PAGER
+        value: less
+        export: true
+
+      - name: CLICOLOR
+        value: 1
+        export: true
+
+      - name: HISTSIZE
+        value: 10000
+        export: true
+
+      - name: HISTCONTROL
+        value: 'ignoredups:erasedups'
+        export: true
+
+      - name: GOPATH
+        value: '${HOME}'
+        export: true
+
+      - name: GIT_PS1_SHOWCOLORHINTS
+        value: 1
+        export: true
+
+      - name: GIT_PS1_SHOWDIRTYSTATE
+        value: 1
+        export: true
+
+      - name: GIT_PS1_SHOWSTASHSTATE
+        value: 1
+        export: true
+
+      - name: GIT_PS1_SHOWUNTRACKEDFILES
+        value: 1
+        export: true
+
+      - name: VAGRANT_DEFAULT_PROVIDER
+        value: virtualbox
+        export: true
+
+    bash_path:
+      - './exec'
+      - '${HOME}/.cargo/bin'
+      - '${GOPATH}/bin'
+      - '/usr/local/opt/python/libexec/bin'
+      - './node_modules/.bin'
+      - '${HOME}/bin'
+      - '/usr/local/bin'
+      - '/usr/local/sbin'
+      - '/usr/local/go/bin'
+      - '/usr/local/opt/qt@5.5/bin'
+      - '${PATH}'
+
+    nvim:
+      config:
+        - name: Set *.es6 as javascript
+          config: |
+            augroup filetypedetect
+              au BufRead,BufNewFile *.es6 setfiletype javascript
+            augroup END
+      ftplugins:
+        - file_type: go
+          config: |
+            setlocal tabstop=4
+            setlocal shiftwidth=4
+            setlocal softtabstop=4
+            setlocal noexpandtab
+        - file_type: elm
+          config: |
+            setlocal tabstop=4
+            setlocal shiftwidth=4
+            setlocal softtabstop=4
+            setlocal expandtab
+        - file_type: ruby
+          config: |
+            setlocal tabstop=2
+            setlocal shiftwidth=2
+            setlocal softtabstop=2
+            setlocal expandtab
+      plugins:
+        - name: c-brenn/phoenix.vim
+        - name: duff/vim-scratch
+        - name: elixir-editors/vim-elixir
+        - name: elmcast/elm-vim
+          config: |
+            let g:elm_format_autosave = 1
+        - name: fatih/vim-go
+          config: |
+            let g:go_fmt_command = "goimports"
+            let g:go_list_type = "quickfix"
+        - name: godlygeek/tabular
+        - name: hashivim/vim-hashicorp-tools
+          config: |
+            let g:terraform_fmt_on_save = 1
+        - name: janko-m/vim-test
+          config: |
+            let test#strategy = "tslime"
+            nmap <silent> <leader>t :TestNearest<CR>
+            nmap <silent> <leader>T :TestFile<CR>
+            nmap <silent> <leader>a :TestSuite<CR>
+            nmap <silent> <leader>l :TestLast<CR>
+            nmap <silent> <leader>g :TestVisit<CR>
+        - name: jelera/vim-javascript-syntax
+        - name: jgdavey/tslime.vim
+          config: |
+            nmap <C-c>r <Plug>SetTmuxVars
+        - name: jremmen/vim-ripgrep
+        - name: junegunn/vim-easy-align
+          config: |
+            xmap ga <Plug>(EasyAlign)
+            nmap ga <Plug>(EasyAlign)
+        - name: morhetz/gruvbox
+          config: |
+            let g:gruvbox_italic=1
+            set background=dark
+            colorscheme gruvbox
+        - name: pearofducks/ansible-vim
+        - name: prettier/vim-prettier
+          opts: "'do': 'yarn install', 'for': [ 'javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql' ]"
+          config: |
+            let g:prettier#config#trailing_comma = 'none'
+            let g:prettier#config#bracket_spacing = 'true'
+        - name: rodjek/vim-puppet
+        - name: rust-lang/rust.vim
+        - name: slashmili/alchemist.vim
+        - name: tpope/vim-endwise
+        - name: tpope/vim-fugitive
+        - name: tpope/vim-git
+        - name: tpope/vim-haml
+        - name: tpope/vim-markdown
+        - name: tpope/vim-projectionist
+        - name: tpope/vim-ragtag
+        - name: tpope/vim-rails
+        - name: tpope/vim-repeat
+        - name: tpope/vim-surround
+        - name: vim-ruby/vim-ruby
+        - name: vim-scripts/matchit.zip
