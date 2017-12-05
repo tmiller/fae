@@ -212,6 +212,16 @@
           config: |
             xmap ga <Plug>(EasyAlign)
             nmap ga <Plug>(EasyAlign)
+        - name: junegunn/fzf
+          config: |
+            nnoremap <c-p> :FZF<cr>
+        - name: junegunn/fzf.vim
+          config: |
+            nnoremap <localleader>b :Buffers<cr>
+            let g:fzf_action = {
+            \ 'ctrl-s': 'split',
+            \ 'ctrl-v': 'vsplit'
+            \ }
         - name: morhetz/gruvbox
           config: |
             let g:gruvbox_italic=1
