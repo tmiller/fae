@@ -222,6 +222,7 @@
             \ 'ctrl-s': 'split',
             \ 'ctrl-v': 'vsplit'
             \ }
+        - name: LnL7/vim-nix
         - name: mhinz/vim-mix-format
           config: |
             let g:mix_format_on_save = 1
