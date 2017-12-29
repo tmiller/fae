@@ -222,6 +222,9 @@
             \ 'ctrl-s': 'split',
             \ 'ctrl-v': 'vsplit'
             \ }
+        - name: mhinz/vim-mix-format
+          config: |
+            let g:mix_format_on_save = 1
         - name: morhetz/gruvbox
           config: |
             let g:gruvbox_italic=1
@@ -246,5 +249,3 @@
         - name: tpope/vim-rails
         - name: tpope/vim-repeat
         - name: tpope/vim-surround
-        - name: vim-ruby/vim-ruby
-        - name: vim-scripts/matchit.zip
