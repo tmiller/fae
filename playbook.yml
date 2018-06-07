@@ -94,7 +94,7 @@
         export: true
 
       - name: FZF_ALT_C_COMMAND
-        value: "bfs \\( -path '*/vendor' -or -path '*/node_modules' \\) -prune -or -type d -nohidden"
+        value: "bfs \\( -path '*/vendor' -or -path '*/node_modules' -or -path '*/Library' \\) -prune -or -type d -nohidden"
         export: true
 
       - name: LESS
