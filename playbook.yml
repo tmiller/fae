@@ -86,11 +86,11 @@
         export: true
 
       - name: FZF_DEFAULT_COMMAND
-        value: "rg --no-ignore --hidden --files --follow -g '!{.git,node_modules,vendor,elm-stuff,deps,_build,tmp}'"
+        value: "rg --no-ignore --hidden --files --follow -g '!{.git,node_modules,vendor,elm-stuff,deps,_build,tmp,target}'"
         export: true
 
       - name: FZF_CTRL_T_COMMAND
-        value: "rg --no-ignore --hidden --files --follow -g '!{.git,node_modules,vendor,elm-stuff,deps,_build,tmp}'"
+        value: "rg --no-ignore --hidden --files --follow -g '!{.git,node_modules,vendor,elm-stuff,deps,_build,tmp,target}'"
         export: true
 
       - name: FZF_ALT_C_COMMAND
