@@ -51,11 +51,61 @@
       - iterm2
       - xquartz
 
-    git_name: Tom Miller
-    git_email: jackerran@gmail.com
-
     gpg_default_key: 0526A53451500B14C2C3E01568DFE95CAE3C2502
     gpg_ssh_agent: True
+
+    git_config:
+      user:
+        - name = Tom Miller
+        - email = jackeran@gmail.com
+        - "signingkey = {{ gpg_default_key }}"
+      color:
+        - ui = true
+      "color \"status\"":
+        - added = green
+        - changed = yellow
+        - untracked = red
+      core:
+        - excludesfile = "~/.cvsignore"
+      commit:
+        - verbose = true
+        - gpgsign = true
+      credential:
+        - helper = osxkeychain
+      rerere:
+        - enabled = true
+      push:
+        - default = simple
+      alias:
+        - st = status --short --branch
+        - co = checkout
+        - aa = add --all
+        - au = add --update
+        - fa = fetch --all
+        - fap = fetch --all --prune
+        - b = branch
+        - ff = merge --ff-only
+        - ms = merge --no-commit --log --no-ff
+        - mc = merge --log --no-ff
+        - rc = rebase --continue
+        - ci = commit -v
+        - amend = commit -v --amend
+        - ignored = !git ls-files -v | grep '^[[:lower:]]' | cut -c 3-
+        - ignore = update-index --assume-unchanged
+        - acknowledge = update-index --no-assume-unchanged
+        - di = diff
+        - dc = diff --cached
+        - dh1 = diff HEAD~1
+        - h = log --pretty='tformat:%C(auto,yellow)%h%C(auto,reset) %C(auto,green)(%ar)%C(auto,reset) %C(auto,bold blue)<%an>%C(auto,reset) %C(auto,red)%d%C(auto,reset) %s' -1
+        - head = log --pretty='tformat:%C(auto,yellow)%h%C(auto,reset) %C(auto,green)(%ar)%C(auto,reset) %C(auto,bold blue)<%an>%C(auto,reset) %C(auto,red)%d%C(auto,reset) %s' -1
+        - hp = show --patch --pretty='tformat:%C(auto,yellow)%h%C(auto,reset) %C(auto,green)(%ar)%C(auto,reset) %C(auto,bold blue)<%an>%C(auto,reset) %C(auto,red)%d%C(auto,reset) %s'
+        - l = log --graph --pretty='tformat:%C(auto,yellow)%h%C(auto,reset) %C(auto,green)(%ar)%C(auto,reset) %C(auto,bold blue)<%an>%C(auto,reset) %C(auto,red)%d%C(auto,reset) %s'
+        - la = log --graph --all --pretty='tformat:%C(auto,yellow)%h%C(auto,reset) %C(auto,green)(%ar)%C(auto,reset) %C(auto,bold blue)<%an>%C(auto,reset) %C(auto,red)%d%C(auto,reset) %s'
+        - r = log --graph --pretty='tformat:%C(auto,yellow)%h%C(auto,reset) %C(auto,green)(%ar)%C(auto,reset) %C(auto,bold blue)<%an>%C(auto,reset) %C(auto,red)%d%C(auto,reset) %s' -20
+        - ra = log --graph --all --pretty='tformat:%C(auto,yellow)%h%C(auto,reset) %C(auto,green)(%ar)%C(auto,reset) %C(auto,bold blue)<%an>%C(auto,reset) %C(auto,red)%d%C(auto,reset) %s' -20
+        - lf = log --first-parent --oneline
+        - my-commits = log --author='Tom Miller' --author-date-order --date=format:'%a %b %d %r' --format='%h | %ad | %s'
+
 
     asdf_version: v0.4.0
 
