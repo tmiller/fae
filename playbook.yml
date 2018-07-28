@@ -38,6 +38,8 @@
       - readline
       - ripgrep
       - tavianator/tap/bfs
+      - terraform
+      - terraform_landscape
       - tree
       - watch
       - wrk
