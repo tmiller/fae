@@ -24,6 +24,7 @@
 
   vars:
     packages_install:
+      - bfg
       - coreutils
       - curl
       - exa
