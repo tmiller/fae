@@ -214,6 +214,9 @@
             augroup filetypedetect
               au BufRead,BufNewFile *.es6 setfiletype javascript
             augroup END
+        - name: https://github.com/neovim/neovim/issues/7861
+          config: |
+            autocmd VimResized * redraw!
       ftplugins:
         - file_type: go
           config: |
