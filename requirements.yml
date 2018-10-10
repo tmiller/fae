@@ -36,4 +36,4 @@
 - name: faen.tmux
   src: https://gitlab.com/faen/tmux.git
   scm: git
-  version: v1.0.0
+  version: master
