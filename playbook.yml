@@ -306,3 +306,4 @@
         - name: tpope/vim-rails
         - name: tpope/vim-repeat
         - name: tpope/vim-surround
+        - name: vim-erlang/vim-erlang-runtime
