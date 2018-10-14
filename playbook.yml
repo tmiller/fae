@@ -194,6 +194,10 @@
         value: virtualbox
         export: true
 
+      - name: KERL_BUILD_DOCS
+        value: yes
+        export: true
+
     bash_path:
       - './exec'
       - '${HOME}/.cargo/bin'
