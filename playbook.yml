@@ -57,7 +57,7 @@
     git_config:
       user:
         - name = Tom Miller
-        - email = jackeran@gmail.com
+        - email = jackerran@gmail.com
         - "signingkey = {{ gpg_default_key }}"
       color:
         - ui = true
