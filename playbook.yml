@@ -16,7 +16,7 @@
 
   tasks:
     - name: install ~/.bashrc.d/todo
-      template:f
+      template:
         src: templates/bashrc.j2
         dest: ~/.bashrc.d/move-to-faen
       tags:
