@@ -16,7 +16,7 @@
 
   tasks:
     - name: install ~/.bashrc.d/todo
-      template:
+      template:f
         src: templates/bashrc.j2
         dest: ~/.bashrc.d/move-to-faen
       tags:
@@ -110,11 +110,10 @@
     asdf_version: v0.4.0
 
     tmux_g_win_opt:
-      window-status-current-fg: white
+      window-status-current-style: "[fg=white]"
 
     tmux_g_opt:
-      status-bg: black
-      status-fg: blue
+      status-style: "[fg=blue,bg=black]"
       status-left: '#[fg=green]#H'
       status-right: '#[fg=yellow]%A %v %l:%M %p'
 
