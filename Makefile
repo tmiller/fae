@@ -1,23 +1,25 @@
 .PHONY: run setup select override
+.DEFAULT_GOAL := run
 
-AG      = ansible-galaxy
-AGFLAGS = role install --force --role-file requirements.yml
+AG      := ansible-galaxy
+AGFLAGS := role install --role-file requirements.yml
 
-AP          = ansible-playbook
-APFLAGS     = -i localhost
-APVARS      = $(foreach file, $(wildcard variables/*.yml),--extra-vars @$(file))
-APOVERRIDES = $(foreach file, $(wildcard overrides/*.yml),--extra-vars @$(file))
+AP          := ansible-playbook
+APVARS      := $(foreach file, $(wildcard variables/*.yml),--extra-vars @$(file))
+APOVERRIDES := $(foreach file, $(wildcard overrides/*.yml),--extra-vars @$(file))
+APFLAGS     := $(APVARS) $(APOVERRIDES)
 
 TAGS = $(t)
 
-run: setup
-	$(AP) $(APFLAGS) $(APVARS) $(APOVERRIDES) playbook.yml
-
-select:
-	$(AP) $(APFLAGS) $(APVARS) $(APOVERRIDES) --tags=$(TAGS) playbook.yml
 
 setup:
 	$(AG) $(AGFLAGS)
+
+run: setup
+	$(AP) $(APFLAGS) playbook.yml
+
+select:
+	$(AP) $(APFLAGS) --tags=$(TAGS) playbook.yml
 
 override:
 	cp variables/$(file).yml overrides/$(file).yml
