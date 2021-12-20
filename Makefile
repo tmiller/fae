@@ -1,4 +1,4 @@
-.PHONY: run setup
+.PHONY: run setup select override
 
 AG      = ansible-galaxy
 AGFLAGS = role install --force --role-file requirements.yml
