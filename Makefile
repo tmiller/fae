@@ -18,3 +18,6 @@ select:
 
 setup:
 	$(AG) $(AGFLAGS)
+
+override:
+	cp variables/$(file).yml overrides/$(file).yml
