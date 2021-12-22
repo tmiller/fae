@@ -25,5 +25,5 @@ This will install ansible-galaxy roles then install and configure your local
 laptop
 ```
 ansible-galaxy install -r requirements.yml
-asnible-playbook playbook.yml
+ansible-playbook playbook.yml
 ```
