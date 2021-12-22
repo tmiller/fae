@@ -1,25 +1,38 @@
-.PHONY: run setup select override
-.DEFAULT_GOAL := run
+.PHONY: play galaxy tags override clean
+.DEFAULT_GOAL := play
 
-AG      := ansible-galaxy
-AGFLAGS := role install --role-file requirements.yml
+SYS_PYTHON   := /usr/bin/python3
+SYS_PIP      := /usr/bin/pip3
 
-AP          := ansible-playbook
-APVARS      := $(foreach file, $(wildcard variables/*.yml),--extra-vars @$(file))
-APOVERRIDES := $(foreach file, $(wildcard overrides/*.yml),--extra-vars @$(file))
-APFLAGS     := $(APVARS) $(APOVERRIDES)
+A_PIP        := ansible/bin/pip
 
-TAGS = $(t)
+AG           := ansible/bin/ansible-galaxy
+AG_FLAGS     := role install --role-file requirements.yml
 
+AP           := ansible/bin/ansible-playbook
+AP_VARS      := $(foreach file, $(wildcard variables/*.yml),--extra-vars @$(file))
+AP_OVERRIDES := $(foreach file, $(wildcard overrides/*.yml),--extra-vars @$(file))
+AP_FLAGS     := $(AP_VARS) $(AP_OVERRIDES)
+AP_TAGS      := --tags $(t)
 
-setup:
-	$(AG) $(AGFLAGS)
+BINS         := $(AG) $(AP) $(A_PIP)
 
-run: setup
-	$(AP) $(APFLAGS) playbook.yml
+galaxy: | $(BINS)
+	$(AG) $(AG_FLAGS)
 
-select:
-	$(AP) $(APFLAGS) --tags=$(TAGS) playbook.yml
+play: galaxy | $(BINS)
+	$(AP) $(AP_FLAGS) playbook.yml
+
+tags: | $(BINS)
+	$(AP) $(AP_FLAGS) $(AP_TAGS) playbook.yml
+
+$(BINS):
+	$(SYS_PIP) install --user virtualenv
+	$(SYS_PYTHON) -m virtualenv ansible
+	$(A_PIP) install ansible
 
 override:
 	cp variables/$(file).yml overrides/$(file).yml
+
+clean:
+	rm -rf ansible

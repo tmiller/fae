@@ -4,6 +4,7 @@ terraform_version: 1.1.2
 kubectl_version: 1.1.2
 helm_version: 3.7.2
 
+asdf_version: v0.9.0
 asdf_init_shell: false
 asdf_plugins:
   - name: awscli
@@ -47,10 +48,10 @@ asdf_plugins:
       - 0.9.4
 
   - name: python
-    global: miniconda3-latest
+    global: 3.10.1
     versions:
+      - 3.10.1
       - miniconda3-latest
-      - miniconda3-4.7.12
 
   - name: ripgrep
     global: 13.0.0
