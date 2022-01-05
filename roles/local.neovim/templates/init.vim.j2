@@ -28,6 +28,7 @@ call dein#add('c-brenn/phoenix.vim')
   call dein#add('tpope/vim-ragtag')
   call dein#add('tpope/vim-repeat')
   call dein#add('tpope/vim-surround')
+  call dein#add('shumphrey/fugitive-gitlab.vim')
 
   call dein#add('Olical/conjure')
 
@@ -160,3 +161,12 @@ nnoremap <localleader>* :Rg<cr>
 let g:gruvbox_italic=1
 set background=dark
 colorscheme gruvbox
+
+{% if neovim_fugitive_gitlab_domains is defined %}
+" shumphrey/fugitive-gitlab.vim
+let g:fugitive_gitlab_domains = [
+  {%- for domain in neovim_fugitive_gitlab_domains -%}
+    '{{ domain }}'{% if not loop.last %},{% endif %}
+  {%- endfor -%}
+]
+{%- endif %}

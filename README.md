@@ -27,3 +27,8 @@ laptop
 ansible-galaxy install -r requirements.yml
 ansible-playbook playbook.yml
 ```
+
+## Undefined Variables
+
+`neovim_fugitive_gitlab_domains`: Array of strings to override the url used by
+                                  the GBrowse command on gitlab projects.
