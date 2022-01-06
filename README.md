@@ -28,29 +28,29 @@ will attempt to run the playbook against this local machine.
 
 ## Running
 
-```
+```shell
 make
 ```
 
 ### Extra Features
 
 #### Run only certain tags
-```
+```shell
 make tags t=git
 ```
 
 #### Install ansible galaxy roles and collections
-```
+```shell
 make galaxy
 ```
 
 #### Copy a vars file for overrides
-```
+```shell
 make override file=git
 ```
 
 #### Remove the virtualenv
-```
+```shell
 make clean
 ```
 
