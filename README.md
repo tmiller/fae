@@ -34,22 +34,22 @@ make
 
 ### Extra Features
 
-#### Run only certain tags
+Run only certain tags
 ```shell
 make tags t=git
 ```
 
-#### Install ansible galaxy roles and collections
+Install ansible galaxy roles and collections
 ```shell
 make galaxy
 ```
 
-#### Copy a vars file for overrides
+Copy a vars file for overrides
 ```shell
 make override file=git
 ```
 
-#### Remove the virtualenv
+Remove the virtualenv
 ```shell
 make clean
 ```
