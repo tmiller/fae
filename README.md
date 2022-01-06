@@ -25,7 +25,7 @@ settings in the `variables` that might differ between machines.
 ## What happens
 
 This will try to find the system python and install virtualenv using pip. Then
-it will create a virtualenv named ansible in this directory. It will then
+it will create a virtualenv named `.ansible` in this directory. It will then
 install ansible and its dependencies to that virtualenv. After that it will
 install any ansible galaxy roles in the `requirements.yml` file. Finally it
 will attempt to run the playbook against this local machine.

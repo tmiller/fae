@@ -3,4 +3,4 @@
 overrides/
 
 # Python VENV
-ansible/
+.ansible/
