@@ -1,6 +1,6 @@
 # fae
 
-This project sets up a laptop for development
+This project sets up a computer for development
 
 ## Supported Operating Systems
 
