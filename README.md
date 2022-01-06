@@ -6,6 +6,11 @@ This project sets up a laptop for development
 
 - macOS
 
+## Dependencies
+
+- make
+- system Python3
+- system pip3
 
 ## Organization
 
