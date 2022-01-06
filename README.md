@@ -1,34 +1,61 @@
 # fae
 
-So our journey forks yet again.
+This project sets up a laptop for development
+
+## Supported Operating Systems
+
+- macOS
+
 
 ## Organization
 
-Most thing anyone will ever care about will be in the playbook.yml file. Most
-of the roles are located [here](https://gitlab.com/faen).
+A Makefile is used to perform the installation. The playbook will reference
+either local roles or third party roles from ansible galaxy. Variables safe to
+be checked in to git will be placed in the `variables` subdirectory with the
+name of the role they are used to configure. The `overrides` subdirectory is an
+additional set of variables insecure to check into git or used to override
+settings in the `variables` that might differ between machines.
 
-## Ansible Galaxy
 
-Install packages
-```
-ansible-galaxy install -r requirements.yml
-```
+## What happens
 
-Update packages
-```
-ansible-galaxy install -f -r requirements.yml
-```
+This will try to find the system python and install virtualenv using pip. Then
+it will create a virtualenv named ansible in this directory. It will then
+install ansible and its dependencies to that virtualenv. After that it will
+install any ansible galaxy roles in the `requirements.yml` file. Finally it
+will attempt to run the playbook against this local machine.
+
 
 ## Running
 
-This will install ansible-galaxy roles then install and configure your local
-laptop
 ```
-ansible-galaxy install -r requirements.yml
-ansible-playbook playbook.yml
+make
 ```
 
-## Undefined Variables
+### Extra Features
+
+#### Run only certain tags
+```
+make tags t=git
+```
+
+#### Install ansible galaxy roles and collections
+```
+make galaxy
+```
+
+#### Copy a vars file for overrides
+```
+make override file=git
+```
+
+#### Remove the virtualenv
+```
+make clean
+```
+
+
+## Override Variables
 
 `neovim_fugitive_gitlab_domains`: Array of strings to override the url used by
                                   the GBrowse command on gitlab projects.
