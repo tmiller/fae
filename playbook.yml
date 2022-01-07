@@ -7,3 +7,5 @@
     - markosamuli.asdf
     - local.git
     - local.neovim
+    - role: local.kitty
+      tags: kitty
