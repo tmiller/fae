@@ -4,8 +4,14 @@
   connection: local
 
   roles:
-    - markosamuli.asdf
-    - local.git
-    - local.neovim
+    - role: markosamuli.asdf
+      tags: asdf
+
+    - role: local.git
+      tags: git
+
+    - role: local.neovim
+      tags: neovim
+
     - role: local.kitty
       tags: kitty

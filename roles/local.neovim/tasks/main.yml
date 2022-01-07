@@ -2,20 +2,23 @@
 # This is faster than using the file directive
 - name: Create require directories
   command: mkdir -p ~/.config/nvim/{backups,swaps,undo} ~/.cache
-  tags: neovim
+  tags:
+    - config
 
 - name: Install dein plugin manager
   git:
     repo: https://github.com/Shougo/dein.vim
     dest: ~/.cache/dein/repos/github.com/Shougo/dein.vim
     depth: 1
-  tags: neovim
+  tags:
+    - config
 
 - name: Write ~/.config/nvim/init.vim
   template:
     src: init.vim.j2
     dest: ~/.config/nvim/init.vim
-  tags: neovim
+  tags:
+    - config
 
 - name: Install and Update plugins
   command: >
@@ -26,4 +29,4 @@
     call dein#update()'
     +qa!
   tags:
-    - neovim
+    - config

@@ -3,10 +3,12 @@
   template:
     src: .gitconfig.j2
     dest: ~/.gitconfig
-  tags: git
+  tags:
+    - config
 
 - name: Write ~/.cvsignore
   template:
     src: .cvsignore.j2
     dest: ~/.cvsignore
-  tags: git
+  tags:
+    - config
