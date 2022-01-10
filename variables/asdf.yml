@@ -47,11 +47,10 @@ asdf_plugins:
     versions:
       - 0.9.4
 
-        #  - name: python
-        #    global: 3.10.1
-        #    versions:
-        #      - 3.10.1
-        #      - miniconda3-latest
+  - name: python
+    global: 3.10.1
+    versions:
+      - 3.10.1
 
   - name: ripgrep
     global: 13.0.0
