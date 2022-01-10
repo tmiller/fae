@@ -4,8 +4,11 @@
   connection: local
 
   roles:
-    - role: markosamuli.asdf
-      tags: asdf
+    - role: local.kitty
+      tags: kitty
+
+    - role: local.fish
+      tags: fish
 
     - role: local.git
       tags: git
@@ -13,5 +16,6 @@
     - role: local.neovim
       tags: neovim
 
-    - role: local.kitty
-      tags: kitty
+    - role: markosamuli.asdf
+      tags: asdf
+
