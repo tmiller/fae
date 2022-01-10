@@ -1,0 +1,56 @@
+---
+- name: Create .config/tmux/plugins
+  file:
+    name: ~/.config/tmux/plugins
+    state: directory
+  tags:
+    - config
+
+- name: Write .config/tmux/tmux.conf
+  template:
+    src: tmux.conf.j2
+    dest: ~/.config/tmux/tmux.conf
+  tags:
+    - config
+
+- name: Check if tmux is installed
+  command: which tmux
+  register: tmux
+  ignore_errors: true
+  tags:
+    - install
+    - update
+
+- name: Install tmux plugin manager (tpm)
+  git:
+    repo: https://github.com/tmux-plugins/tpm
+    dest: ~/.config/tmux/plugins/tpm
+  register: tpm_install
+  when:
+    - tmux.rc == 0
+  tags:
+    - install
+
+- name: Check if tpm is installed
+  stat:
+    path: ~/.config/tmux/plugins/tpm
+  register: tpm
+  tags:
+    - install
+    - update
+
+- name: Install tpm plugins
+  command: ~/.config/tmux/plugins/tpm/bin/install_plugins
+  when:
+    - tmux.rc == 0
+    - tpm.stat.exists or tpm_install.changed
+  tags:
+    - install
+
+- name: Update tpm plugins
+  command: ~/.config/tmux/plugins/tpm/bin/update_plugins all
+  when:
+    - tmux.rc == 0
+    - tpm.stat.exists
+  tags:
+    - update

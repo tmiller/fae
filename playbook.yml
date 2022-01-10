@@ -13,6 +13,9 @@
     - role: local.git
       tags: git
 
+    - role: local.tmux
+      tags: tmux
+
     - role: local.neovim
       tags: neovim
 

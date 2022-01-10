@@ -1,0 +1,23 @@
+# Remove the default keybinding
+unbind-key C-b
+
+set-option -g prefix C-space
+
+set-window-option -g mode-keys vi
+
+bind-key 'c' new-window -c "#{pane_current_path}"
+
+set-option -g status-style "fg=blue,bg=black"
+set-option -g status-left "#[fg=green]#H"
+set-option -g status-right "#[fg=yellow]%A %F %l:%M %p"
+set-window-option -g window-status-current-style "fg=white"
+
+# Specify plugins
+set-option -g @plugin 'tmux-plugins/tmux-pain-control'
+set-option -g @plugin 'tmux-plugins/tmux-sensible'
+set-option -g @plugin 'tmux-plugins/tmux-sessionist'
+set-option -g @plugin 'tmux-plugins/tmux-yank'
+set-option -g @plugin 'tmux-plugins/tpm'
+
+# Initialize tmux plugin manager
+run '~/.config/tmux/plugins/tpm/tpm'
