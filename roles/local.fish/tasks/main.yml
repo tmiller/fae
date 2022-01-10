@@ -12,12 +12,6 @@
   tags:
     - config
 
-- name: Write fisher plugins
-  template:
-    src: fish_plugins
-    dest: ~/.config/fish/fish_plugins
-  tags:
-    - config
 
 - name: Check if fish is installed
   command: which fish
@@ -46,6 +40,13 @@
   tags:
     - install
     - update
+
+- name: Write fish_plugins
+  template:
+    src: fish_plugins
+    dest: ~/.config/fish/fish_plugins
+  tags:
+    - config
 
 - name: Install and update plugins
   shell:
