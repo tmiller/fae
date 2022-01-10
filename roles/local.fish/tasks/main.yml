@@ -12,6 +12,12 @@
   tags:
     - config
 
+- name: Write config.fish
+  template:
+    src: config.fish
+    dest: ~/.config/fish/config.fish
+  tags:
+    - config
 
 - name: Check if fish is installed
   command: which fish
