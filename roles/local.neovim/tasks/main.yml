@@ -1,0 +1,32 @@
+---
+# This is faster than using the file directive
+- name: Create require directories
+  command: mkdir -p ~/.config/nvim/{backups,swaps,undo} ~/.cache
+  tags:
+    - config
+
+- name: Install dein plugin manager
+  git:
+    repo: https://github.com/Shougo/dein.vim
+    dest: ~/.cache/dein/repos/github.com/Shougo/dein.vim
+    depth: 1
+  tags:
+    - config
+
+- name: Write ~/.config/nvim/init.vim
+  template:
+    src: init.vim.j2
+    dest: ~/.config/nvim/init.vim
+  tags:
+    - config
+
+- name: Install and Update plugins
+  command: >
+    nvim --headless +'
+    if dein#check_install()
+      call dein#install()
+    endif
+    call dein#update()'
+    +qa!
+  tags:
+    - config

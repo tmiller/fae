@@ -1,0 +1,14 @@
+---
+- name: Write ~/.gitconfig
+  template:
+    src: .gitconfig.j2
+    dest: ~/.gitconfig
+  tags:
+    - config
+
+- name: Write ~/.cvsignore
+  template:
+    src: .cvsignore.j2
+    dest: ~/.cvsignore
+  tags:
+    - config

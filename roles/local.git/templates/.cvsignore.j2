@@ -1,0 +1,72 @@
+##############################
+# OSX
+##############################
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+
+# Thumbnails
+._*
+
+# Files that might appear on external disk
+.Spotlight-V100
+.Trashes
+
+##############################
+# Jetbrains IDE
+##############################
+.idea
+
+##############################
+# Vim
+##############################
+.*.sw[a-z]
+*.un~
+Session.vim
+.netrwhist
+
+##############################
+# Emacs
+##############################
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+.elc
+auto-save-list
+tramp
+.\#*
+
+# Org-mode
+.org-id-locations
+*_archive
+
+##############################
+# Ruby
+##############################
+.bundle
+.ruby-version
+.rbenv-version
+.rvmrc
+test-unit.yml
+/pkg/
+/doc/
+/cov/
+/vendor/bundle
+/exec/
+
+##############################
+# ctags
+##############################
+tags
+TAGS
+{% if git_ignore is defined %}
+
+##############################
+# From Ansible 
+##############################
+{% for glob in git_ignore %}
+{{ glob }}
+{% endfor %}
+{% endif %}

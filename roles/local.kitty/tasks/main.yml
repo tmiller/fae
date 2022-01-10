@@ -1,0 +1,14 @@
+---
+- name: Create .config/kitty
+  file:
+    name: ~/.config/kitty
+    state: directory
+  tags:
+    - config
+
+- name: Write .config/kitty/kitty.conf
+  template:
+    src: kitty.conf.j2
+    dest: ~/.config/kitty/kitty.conf
+  tags:
+    - config

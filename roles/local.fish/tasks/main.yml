@@ -1,0 +1,66 @@
+---
+
+- name: Create configuration directories
+  file:
+    name: ~/.config/fish/{{ item }}
+    state: directory
+    recurse: true
+  loop:
+    - completions
+    - conf.d
+    - functions
+  tags:
+    - config
+
+- name: Write config.fish
+  template:
+    src: config.fish
+    dest: ~/.config/fish/config.fish
+  tags:
+    - config
+
+- name: Check if fish is installed
+  command: which fish
+  register: fish
+  ignore_errors: true
+  tags:
+    - install
+    - update
+
+- name: Check if fisher is installed
+  stat:
+    path: ~/.config/fish/functions/fisher.fish
+  register: fisher
+  tags:
+    - install
+    - update
+
+- name: Install fisher
+  shell:
+    cmd: curl -sL https://git.io/fisher | source && fisher install jorgebucaran/fisher
+    executable: "{{ fish.stdout }}"
+  register: fisher_install
+  when:
+    - fish.rc == 0
+    - not fisher.stat.exists
+  tags:
+    - install
+    - update
+
+- name: Write fish_plugins
+  template:
+    src: fish_plugins
+    dest: ~/.config/fish/fish_plugins
+  tags:
+    - config
+
+- name: Install and update plugins
+  shell:
+    cmd: fisher update
+    executable: "{{ fish.stdout }}"
+  when:
+    - fish.rc == 0
+    - fisher.stat.exists or fisher_install.changed
+  tags:
+    - install
+    - update

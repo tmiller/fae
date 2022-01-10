@@ -1,3 +1,6 @@
 # Ansible Files
 *.retry
-roles/faen.*
+overrides/
+
+# Python VENV
+.ansible/
