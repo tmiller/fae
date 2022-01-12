@@ -19,6 +19,15 @@
   tags:
     - config
 
+- name: Write functions
+  copy:
+    src: "functions/{{ item }}.fish"
+    dest: "~/.config/fish/functions/{{ item }}.fish"
+  loop:
+    - op
+  tags:
+    - config
+
 - name: Check if fish is installed
   command: which fish
   register: fish
