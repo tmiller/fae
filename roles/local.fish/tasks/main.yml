@@ -1,30 +1,40 @@
 ---
 
+- name: Lookup config dirs
+  local_action:
+    module: find
+    paths: "{{ role_path }}/files"
+    recurse: true
+    file_type: directory
+  register: full_directories_path
+
+- name: Lookup config files
+  local_action:
+    module: find
+    paths: "{{ role_path }}/files"
+    recurse: true
+    pattern: "*.fish"
+  register: full_files_path
+
+- name: Set paths relative to role
+  set_fact:
+    directories: "{{ full_directories_path.files | map(attribute='path') | map('regex_replace', '^' + role_path + '/files/', '') }}"
+    files: "{{ full_files_path.files | map(attribute='path') | map('regex_replace', '^' + role_path + '/files/', '') }}"
+
 - name: Create configuration directories
   file:
-    name: ~/.config/fish/{{ item }}
+    name: "~/.config/fish/{{ item }}"
     state: directory
     recurse: true
-  loop:
-    - completions
-    - conf.d
-    - functions
+  loop: "{{ directories }}"
   tags:
     - config
 
-- name: Write config.fish
+- name: Write configuration files
   copy:
-    src: config.fish
-    dest: ~/.config/fish/config.fish
-  tags:
-    - config
-
-- name: Write functions
-  copy:
-    src: "functions/{{ item }}.fish"
-    dest: "~/.config/fish/functions/{{ item }}.fish"
-  loop:
-    - op
+    src: "{{ item }}"
+    dest: "~/.config/fish/{{ item }}"
+  loop: "{{ files }}"
   tags:
     - config
 
