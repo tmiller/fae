@@ -13,7 +13,7 @@
     - config
 
 - name: Write config.fish
-  template:
+  copy:
     src: config.fish
     dest: ~/.config/fish/config.fish
   tags:
@@ -57,7 +57,7 @@
     - update
 
 - name: Write fish_plugins
-  template:
+  copy:
     src: fish_plugins
     dest: ~/.config/fish/fish_plugins
   tags:
