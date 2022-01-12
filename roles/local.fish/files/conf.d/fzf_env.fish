@@ -1,0 +1,1 @@
+set --global --export FZF_DEFAULT_COMMAND $FZF_FIND_FILE_COMMAND
