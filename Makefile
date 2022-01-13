@@ -19,16 +19,20 @@ AP_TAGS       := --tags $(t)
 
 VENV_BINS     := $(AG) $(AP) $(VENV_PIP)
 
+.PHONY: help
+help:
+	@sed -ne '/@sed/!s/## //p' $(MAKEFILE_LIST)
+
 .PHONY: galaxy
 galaxy: | $(VENV_BINS)
 	$(AG) $(AG_FLAGS)
 
 .PHONY: play
-play: galaxy | $(VENV_BINS)
+play: galaxy | $(VENV_BINS) ## Run main playbook
 	$(AP) $(AP_FLAGS) playbook.yml
 
 .PHONY: tags
-tags: | $(VENV_BINS)
+tags: | $(VENV_BINS)        ## t=[TAG] Run only tags
 	$(AP) $(AP_FLAGS) $(AP_TAGS) playbook.yml
 
 $(VENV_BINS):
@@ -37,7 +41,7 @@ $(VENV_BINS):
 	$(VENV_PIP) install $(VENV_PY_DEPS)
 
 .PHONY: override
-override:
+override:                   ## file=[file] Override files
 	cp variables/$(file).yml overrides/$(file).yml
 
 .PHONY: clean
