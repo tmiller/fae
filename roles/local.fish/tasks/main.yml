@@ -27,7 +27,7 @@
   tags:
     - config
 
-- name: Create configuration directories
+- name: Create config directories
   file:
     name: "~/.config/fish/{{ item }}"
     state: directory
@@ -36,7 +36,7 @@
   tags:
     - config
 
-- name: Write configuration files
+- name: Write config files
   copy:
     src: "{{ item }}"
     dest: "~/.config/fish/{{ item }}"
