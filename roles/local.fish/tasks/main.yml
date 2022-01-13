@@ -7,6 +7,8 @@
     recurse: true
     file_type: directory
   register: full_directories_path
+  tags:
+    - config
 
 - name: Lookup config files
   local_action:
@@ -15,11 +17,15 @@
     recurse: true
     pattern: "*.fish"
   register: full_files_path
+  tags:
+    - config
 
 - name: Set paths relative to role
   set_fact:
     directories: "{{ full_directories_path.files | map(attribute='path') | map('regex_replace', '^' + role_path + '/files/', '') }}"
     files: "{{ full_files_path.files | map(attribute='path') | map('regex_replace', '^' + role_path + '/files/', '') }}"
+  tags:
+    - config
 
 - name: Create configuration directories
   file:
