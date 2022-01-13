@@ -35,6 +35,10 @@ play: galaxy | $(VENV_BINS) ## Run main playbook
 tags: | $(VENV_BINS)        ## t=[TAG] Run only tags
 	$(AP) $(AP_FLAGS) $(AP_TAGS) playbook.yml
 
+.PHONY: check
+check: | $(VENV_BINS)        ## t=[TAG] Run only tags but in Check mode
+	$(AP) $(AP_FLAGS) $(AP_TAGS) --diff --check playbook.yml
+
 $(VENV_BINS):
 	$(SYS_PIP) install --user virtualenv
 	$(SYS_PYTHON) -m virtualenv $(VENV)
