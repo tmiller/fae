@@ -1,14 +1,39 @@
 ---
-- name: Write ~/.gitconfig
-  template:
-    src: .gitconfig.j2
-    dest: ~/.gitconfig
+
+- name: Remove old files
+  file:
+    name: "{{ item }}"
+    state: absent
+  loop:
+    - ~/.gitconfig
+    - ~/.cvsignore
+    - ~/.gitignore
   tags:
     - config
 
-- name: Write ~/.cvsignore
+- name: Lookup config files
+  local_action:
+    module: find
+    paths: "{{ role_path }}/templates"
+    recurse: true
+    pattern: "*.j2"
+  register: full_files_path
+
+- name: Set paths relative to role
+  set_fact:
+    files: "{{ full_files_path.files | map(attribute='path') | map('regex_replace', '^' + role_path + '/templates/', '') }}"
+
+- name: Create ~/.config/git
+  file:
+    name: ~/.config/git
+    state: directory
+  tags:
+    - config
+
+- name: Write config files
   template:
-    src: .cvsignore.j2
-    dest: ~/.cvsignore
+    src: "{{ item }}"
+    dest: "~/.config/git/{{ item | splitext | first }}"
+  loop: "{{ files }}"
   tags:
     - config
