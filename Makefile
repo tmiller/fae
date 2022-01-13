@@ -1,4 +1,3 @@
-.PHONY: play galaxy tags override clean
 .DEFAULT_GOAL := play
 
 SYS_PYTHON    := /usr/bin/python3
@@ -20,12 +19,15 @@ AP_TAGS       := --tags $(t)
 
 VENV_BINS     := $(AG) $(AP) $(VENV_PIP)
 
+.PHONY: galaxy
 galaxy: | $(VENV_BINS)
 	$(AG) $(AG_FLAGS)
 
+.PHONY: play
 play: galaxy | $(VENV_BINS)
 	$(AP) $(AP_FLAGS) playbook.yml
 
+.PHONY: tags
 tags: | $(VENV_BINS)
 	$(AP) $(AP_FLAGS) $(AP_TAGS) playbook.yml
 
@@ -34,8 +36,10 @@ $(VENV_BINS):
 	$(SYS_PYTHON) -m virtualenv $(VENV)
 	$(VENV_PIP) install $(VENV_PY_DEPS)
 
+.PHONY: override
 override:
 	cp variables/$(file).yml overrides/$(file).yml
 
+.PHONY: clean
 clean:
 	rm -rf $(VENV)
