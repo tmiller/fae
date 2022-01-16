@@ -9,6 +9,7 @@ This project sets up a computer for development
 ## Dependencies
 
 - make
+- grep
 - system Python3
 - system pip3
 
@@ -38,8 +39,20 @@ will attempt to run the playbook against this local machine.
 # Setup computer
 make
 
-# Run only certain tags in ansible
-make tags t=git
+# Show available roles
+make roles
+
+# Show available roles
+make actions
+
+# Run entire role
+make ROLE
+
+# Run action across all roles
+make ACTION
+
+# Run action on single role
+make ACTION r=ROLE
 
 # Install ansible galaxy roles and collections
 make galaxy

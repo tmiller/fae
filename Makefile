@@ -1,43 +1,70 @@
-.DEFAULT_GOAL := play
+########################################################################
+# To create comma separated lists
+########################################################################
 
-SYS_PYTHON    := /usr/bin/python3
-SYS_PIP       := /usr/bin/pip3
+null                :=
+space               := $(null) #
+comma               := ,
 
-VENV          := .ansible
-VENV_BIN      := $(VENV)/bin
-VENV_PIP      := $(VENV_BIN)/pip
-VENV_PY_DEPS  := ansible
+########################################################################
+# Binaries and options
+########################################################################
 
-AG            := $(VENV_BIN)/ansible-galaxy
-AG_FLAGS      := role install --role-file requirements.yml
+SYS_PYTHON          := /usr/bin/python3
+SYS_PIP             := /usr/bin/pip3
 
-AP            := $(VENV_BIN)/ansible-playbook
-AP_VARS       := $(foreach file, $(wildcard variables/*.yml),--extra-vars @$(file))
-AP_OVERRIDES  := $(foreach file, $(wildcard overrides/*.yml),--extra-vars @$(file))
-AP_FLAGS      := $(AP_VARS) $(AP_OVERRIDES)
-AP_TAGS       := --tags $(t)
+VENV                := .ansible
+VENV_BIN            := $(VENV)/bin
+VENV_BINS            = $(AG) $(AP) $(VENV_PIP)
+VENV_PIP            := $(VENV_BIN)/pip
+VENV_PY_DEPS        := ansible
 
-VENV_BINS     := $(AG) $(AP) $(VENV_PIP)
+AG                  := $(VENV_BIN)/ansible-galaxy
+AG_FLAGS            := role install --role-file requirements.yml
 
-.PHONY: help
-help:
-	@sed -ne '/@sed/!s/## //p' $(MAKEFILE_LIST)
+AP                  := $(VENV_BIN)/ansible-playbook
+AP_VARS             := $(foreach file, $(wildcard variables/*.yml),--extra-vars @$(file))
+AP_OVERRIDES        := $(foreach file, $(wildcard overrides/*.yml),--extra-vars @$(file))
+AP_FLAGS            := $(strip $(AP_VARS) $(AP_OVERRIDES))
+
+ROLE_TAGS           := $(filter-out tags:,$(shell grep 'tags:' playbook.yml))
+ACTION_TAGS         := install config update
+
+ifdef r
+	AP_SKIP_TAGS_TAGS  = $(filter-out $@,$(ACTION_TAGS) $(filter-out $(r),$(ROLE_TAGS)))
+else
+	AP_SKIP_TAGS_TAGS  = $(filter-out $@,$(ACTION_TAGS))
+endif
+
+AP_SKIP_TAGS         = --skip-tags $(subst $(space),$(comma),$(AP_SKIP_TAGS_TAGS))
+AP_TAGS              = --tags $(subst $(space),$(comma),$(strip $(@) $(r)))
+
+
+.DEFAULT_GOAL := all
+
+.PHONY: all
+all: galaxy | $(VENV_BINS) ## Run main playbook
+	$(AP) $(AP_FLAGS) playbook.yml
 
 .PHONY: galaxy
 galaxy: | $(VENV_BINS)
 	$(AG) $(AG_FLAGS)
 
-.PHONY: play
-play: galaxy | $(VENV_BINS) ## Run main playbook
-	$(AP) $(AP_FLAGS) playbook.yml
+.PHONY: $(ACTION_TAGS)			## (install | config | update) [r=role]
+$(ACTION_TAGS): $(VENV_BINS)
+	$(AP) $(AP_FLAGS) $(AP_TAGS) $(AP_SKIP_TAGS) playbook.yml
 
-.PHONY: tags
-tags: | $(VENV_BINS)        ## t=[TAG] Run only tags
+.PHONY: $(ROLE_TAGS)				## (role tag) [r=role]
+$(ROLE_TAGS): $(VENV_BINS)
 	$(AP) $(AP_FLAGS) $(AP_TAGS) playbook.yml
 
-.PHONY: check
-check: | $(VENV_BINS)        ## t=[TAG] Run only tags but in Check mode
-	$(AP) $(AP_FLAGS) $(AP_TAGS) --diff --check playbook.yml
+.PHONY: roles
+roles:
+	@printf "%s\n" $(ROLE_TAGS) | sort
+
+.PHONY: actions
+actions:
+	@printf "%s\n" $(ACTION_TAGS) | sort
 
 $(VENV_BINS):
 	$(SYS_PIP) install --user virtualenv
