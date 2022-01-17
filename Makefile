@@ -79,12 +79,12 @@ $(ROLE_TAGS): $(VENV_BINS)
 ## list roles
 .PHONY: roles
 roles:
-	@printf "%s\n" $(ROLE_TAGS) | sort
+	@printf "%s\n" $(sort $(ROLE_TAGS))
 
 ## list roles
 .PHONY: actions
 actions:
-	@printf "%s\n" $(ACTION_TAGS) | sort
+	@printf "%s\n" $(sort $(ACTION_TAGS))
 
 $(VENV_BINS):
 	$(SYS_PIP) install --user virtualenv
