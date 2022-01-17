@@ -14,6 +14,19 @@ This project sets up a computer for development
 - system Python3
 - system pip3
 
+## Getting Started
+
+### Ubuntu 21.10
+```bash
+sudo apt update
+sudo apt install -y git build-essential python3 python3-pip
+mkdir -p ~/src/github.com/tmiller
+cd ~/src/github.com/tmiller
+git clone https://github.com/tmiller/fae
+cd fae
+make
+```
+
 ## Organization
 
 A Makefile is used to perform the installation. The playbook will reference
