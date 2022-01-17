@@ -159,9 +159,11 @@ let g:fzf_action = {
 nnoremap <localleader>* :Rg<cr>
 
 " morhetz/gruvbox
-let g:gruvbox_italic=1
-set background=dark
-colorscheme gruvbox
+if dein#is_sourced('gruvbox')
+  let g:gruvbox_italic=1
+  set background=dark
+  colorscheme gruvbox
+endif
 
 {% if neovim_fugitive_gitlab_domains is defined %}
 " shumphrey/fugitive-gitlab.vim

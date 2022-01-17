@@ -1,9 +1,22 @@
 ---
-# This is faster than using the file directive
-- name: Create require directories
-  command: mkdir -p ~/.config/nvim/{backups,swaps,undo} ~/.cache
+- name: Create required directories
+  file:
+    name: "{{ item }}"
+    state: directory
+  loop:
+    - ~/.cache
+    - ~/.config/nvim/backups
+    - ~/.config/nvim/swaps
+    - ~/.config/nvim/undo
   tags:
     - config
+
+- name: Install neovim on Ubuntu
+  import_tasks: install-ubuntu.yml
+  when:
+    - ansible_distribution == "Ubuntu"
+  tags:
+    - install
 
 - name: Install dein plugin manager
   git:
