@@ -15,7 +15,7 @@ become        = $(or $(call should_become,$@), $(call should_become,$(r)))
 
 find_vars     = $(foreach file, $(wildcard $(1)/*.yml),--extra-vars @$(file))
 
-remove_if			= $(if $(1),$(filter-out $(1),$(2)),)
+remove_if     = $(if $(1),$(filter-out $(1),$(2)),)
 remove_action = $(call remove_if,$(1),$(ACTION_TAGS))
 remove_role   = $(call remove_if,$(1),$(ROLE_TAGS))
 
