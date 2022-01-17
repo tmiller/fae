@@ -33,7 +33,7 @@ VENV_PIP            := $(VENV_BIN)/pip
 VENV_PY_DEPS        := ansible
 
 AG                  := $(VENV_BIN)/ansible-galaxy
-AG_FLAGS            := role install --role-file requirements.yml
+AG_FLAGS            := install -r requirements.yml
 
 AP                  := $(VENV_BIN)/ansible-playbook
 AP_VARS             := $(call find_vars,variables)
@@ -64,7 +64,8 @@ all: galaxy | $(VENV_BINS)
 ## Install galaxy requirements
 .PHONY: galaxy
 galaxy: | $(VENV_BINS)
-	$(AG) $(AG_FLAGS)
+	$(AG) role $(AG_FLAGS)
+	$(AG) collection $(AG_FLAGS)
 
 ## make ACTION [r=ROLE]
 .PHONY: $(ACTION_TAGS)

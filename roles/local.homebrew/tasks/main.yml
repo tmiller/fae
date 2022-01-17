@@ -1,0 +1,39 @@
+---
+- name: Check if homebrew is installed
+  command: which brew
+  register: brew
+  ignore_errors: true
+  changed_when: false
+  tags:
+    - install
+
+- name: Setup cache location
+  file:
+    name: ~/.cache/fae/homebrew
+    state: directory
+  when:
+    - brew.rc != 0
+  tags:
+    - install
+
+- name: Download homebrew installation script
+  get_url:
+    url: https://raw.githubusercontent.com/Homebrew/install/master/install.sh
+    dest: ~/.cache/fae/homebrew/install.sh
+    mode: "0755"
+  when:
+    - brew.rc != 0
+  tags:
+    - install
+
+- name: Install homebrew
+  shell:
+    cmd: "{{ ansible_env.HOME }}/.cache/fae/homebrew/install.sh"
+    executable: /bin/bash
+  environment:
+    NONINTERACTIVE: 1
+  become: true
+  when:
+    - brew.rc != 0
+  tags:
+    - install

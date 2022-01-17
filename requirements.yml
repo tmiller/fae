@@ -1,1 +1,7 @@
-- name: markosamuli.asdf
+---
+roles:
+  - name: elliotweiser.osx-command-line-tools
+  - name: markosamuli.asdf
+
+collections:
+  - name: geerlingguy.mac

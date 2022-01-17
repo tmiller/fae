@@ -4,6 +4,10 @@
   connection: local
 
   roles:
+    - role: geerlingguy.mac.homebrew
+      tags: homebrew
+      when: ansible_distribution == "MacOSX"
+
     - role: local.kitty
       tags: kitty
 
