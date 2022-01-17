@@ -15,6 +15,10 @@ become        = $(or $(call should_become,$@), $(call should_become,$(r)))
 
 find_vars     = $(foreach file, $(wildcard $(1)/*.yml),--extra-vars @$(file))
 
+remove_if			= $(if $(1),$(filter-out $(1),$(2)),)
+remove_action = $(call remove_if,$(1),$(ACTION_TAGS))
+remove_role   = $(call remove_if,$(1),$(ROLE_TAGS))
+
 ########################################################################
 # Binaries and options
 ########################################################################
@@ -41,14 +45,9 @@ ROLE_BECOME_LIST    := all op
 
 ROLE_TAGS           := $(filter-out tags:,$(shell grep 'tags:' playbook.yml))
 ACTION_TAGS         := install config update
+ACTION_SKIP_TAGS     = $(strip $(call remove_action,$@) $(call remove_role,$(r)))
 
-ifdef r
-	AP_SKIP_TAGS_TAGS  = $(filter-out $@,$(ACTION_TAGS) $(filter-out $(r),$(ROLE_TAGS)))
-else
-	AP_SKIP_TAGS_TAGS  = $(filter-out $@,$(ACTION_TAGS))
-endif
-
-AP_SKIP_TAGS         = --skip-tags $(subst $(space),$(comma),$(AP_SKIP_TAGS_TAGS))
+AP_SKIP_TAGS         = --skip-tags $(subst $(space),$(comma),$(ACTION_SKIP_TAGS))
 AP_TAGS              = --tags $(subst $(space),$(comma),$(strip $(@) $(r)))
 
 ########################################################################
