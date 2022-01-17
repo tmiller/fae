@@ -91,8 +91,9 @@ $(VENV_BINS):
 	$(SYS_PYTHON) -m virtualenv $(VENV)
 	$(VENV_PIP) install $(VENV_PY_DEPS)
 
+## file=FILE Override files
 .PHONY: override
-override:                   ## file=[file] Override files
+override:
 	cp variables/$(file).yml overrides/$(file).yml
 
 .PHONY: clean
