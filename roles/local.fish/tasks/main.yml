@@ -51,6 +51,7 @@
   changed_when: false
   tags:
     - install
+    - config
     - update
 
 - name: Check if fisher is installed
