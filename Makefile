@@ -56,28 +56,34 @@ AP_TAGS              = --tags $(subst $(space),$(comma),$(strip $(@) $(r)))
 
 .DEFAULT_GOAL := all
 
+## Install everything
 .PHONY: all
-all: galaxy | $(VENV_BINS)	## Run main playbook
+all: galaxy | $(VENV_BINS)
 	$(AP) $(AP_FLAGS) --ask-become-pass playbook.yml
 
-.PHONY: galaxy							## Install galaxy requirements
+## Install galaxy requirements
+.PHONY: galaxy
 galaxy: | $(VENV_BINS)
 	$(AG) $(AG_FLAGS)
 
-.PHONY: $(ACTION_TAGS)			## make ACTION [r=ROLE]
+## make ACTION [r=ROLE]
+.PHONY: $(ACTION_TAGS)
 $(ACTION_TAGS): $(VENV_BINS)
 	$(AP) $(AP_FLAGS) $(AP_TAGS) $(AP_SKIP_TAGS) playbook.yml
 
-.PHONY: $(ROLE_TAGS)				## make ROLE
+## make ROLE
+.PHONY: $(ROLE_TAGS)
 $(ROLE_TAGS): $(VENV_BINS)
 	$(AP) $(AP_FLAGS) $(AP_TAGS) playbook.yml
 
+## list roles
 .PHONY: roles
-roles:											## list roles
+roles:
 	@printf "%s\n" $(ROLE_TAGS) | sort
 
+## list roles
 .PHONY: actions
-actions:										## list roles
+actions:
 	@printf "%s\n" $(ACTION_TAGS) | sort
 
 $(VENV_BINS):
