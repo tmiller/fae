@@ -1,4 +1,4 @@
-set --global --export EDITOR vim
+set --global --export EDITOR nvim
 set --global --export PAGER less
 set --global --export LESS -ingFXRS
 set --global --export GOPATH $HOME
