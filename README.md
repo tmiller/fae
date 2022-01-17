@@ -10,6 +10,7 @@ This project sets up a computer for development
 
 - make
 - grep
+- cut
 - system Python3
 - system pip3
 

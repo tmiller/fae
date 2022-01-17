@@ -41,7 +41,7 @@ AP_OVERRIDES        := $(call find_vars,overrides)
 AP_BECOME            = $(if $(become),--ask-become-pass,)
 AP_FLAGS             = $(strip $(AP_BECOME) $(strip $(AP_VARS) $(AP_OVERRIDES)))
 
-ROLE_BECOME_LIST    := all op
+ROLE_BECOME_LIST    := all $(subst local.,,$(shell grep -lR 'become:' roles/*/tasks | cut -d / -f 2))
 
 ROLE_TAGS           := $(filter-out tags:,$(shell grep 'tags:' playbook.yml))
 ACTION_TAGS         := install config update
