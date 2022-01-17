@@ -26,7 +26,7 @@ remove_role   = $(call remove_if,$(1),$(ROLE_TAGS))
 SYS_PYTHON          := /usr/bin/python3
 SYS_PIP             := /usr/bin/pip3
 
-VENV                := .ansible
+VENV                := $(CURDIR)/.ansible
 VENV_BIN            := $(VENV)/bin
 VENV_BINS            = $(AG) $(AP) $(VENV_PIP)
 VENV_PIP            := $(VENV_BIN)/pip
