@@ -7,6 +7,15 @@ space               := $(null) #
 comma               := ,
 
 ########################################################################
+# User defined functions
+########################################################################
+
+should_become = $(filter $(1),$(ROLE_BECOME_LIST))
+become        = $(or $(call should_become,$@), $(call should_become,$(r)))
+
+find_vars     = $(foreach file, $(wildcard $(1)/*.yml),--extra-vars @$(file))
+
+########################################################################
 # Binaries and options
 ########################################################################
 
@@ -23,9 +32,12 @@ AG                  := $(VENV_BIN)/ansible-galaxy
 AG_FLAGS            := role install --role-file requirements.yml
 
 AP                  := $(VENV_BIN)/ansible-playbook
-AP_VARS             := $(foreach file, $(wildcard variables/*.yml),--extra-vars @$(file))
-AP_OVERRIDES        := $(foreach file, $(wildcard overrides/*.yml),--extra-vars @$(file))
-AP_FLAGS            := $(strip $(AP_VARS) $(AP_OVERRIDES))
+AP_VARS             := $(call find_vars,variables)
+AP_OVERRIDES        := $(call find_vars,overrides)
+AP_BECOME            = $(if $(become),--ask-become-pass,)
+AP_FLAGS             = $(strip $(AP_BECOME) $(strip $(AP_VARS) $(AP_OVERRIDES)))
+
+ROLE_BECOME_LIST    := all op
 
 ROLE_TAGS           := $(filter-out tags:,$(shell grep 'tags:' playbook.yml))
 ACTION_TAGS         := install config update
@@ -39,31 +51,34 @@ endif
 AP_SKIP_TAGS         = --skip-tags $(subst $(space),$(comma),$(AP_SKIP_TAGS_TAGS))
 AP_TAGS              = --tags $(subst $(space),$(comma),$(strip $(@) $(r)))
 
+########################################################################
+# Rule definitions
+########################################################################
 
 .DEFAULT_GOAL := all
 
 .PHONY: all
-all: galaxy | $(VENV_BINS) ## Run main playbook
-	$(AP) $(AP_FLAGS) playbook.yml
+all: galaxy | $(VENV_BINS)	## Run main playbook
+	$(AP) $(AP_FLAGS) --ask-become-pass playbook.yml
 
-.PHONY: galaxy
+.PHONY: galaxy							## Install galaxy requirements
 galaxy: | $(VENV_BINS)
 	$(AG) $(AG_FLAGS)
 
-.PHONY: $(ACTION_TAGS)			## (install | config | update) [r=role]
+.PHONY: $(ACTION_TAGS)			## make ACTION [r=ROLE]
 $(ACTION_TAGS): $(VENV_BINS)
 	$(AP) $(AP_FLAGS) $(AP_TAGS) $(AP_SKIP_TAGS) playbook.yml
 
-.PHONY: $(ROLE_TAGS)				## (role tag) [r=role]
+.PHONY: $(ROLE_TAGS)				## make ROLE
 $(ROLE_TAGS): $(VENV_BINS)
 	$(AP) $(AP_FLAGS) $(AP_TAGS) playbook.yml
 
 .PHONY: roles
-roles:
+roles:											## list roles
 	@printf "%s\n" $(ROLE_TAGS) | sort
 
 .PHONY: actions
-actions:
+actions:										## list roles
 	@printf "%s\n" $(ACTION_TAGS) | sort
 
 $(VENV_BINS):
