@@ -1,0 +1,35 @@
+---
+- name: Check if 1Password is installed
+  command: which op
+  register: op
+  ignore_errors: true
+  tags:
+    - install
+
+- name: Setup cache location
+  file:
+    name: ~/.cache/fae/op
+    state: directory
+  when:
+    - op.rc != 0
+  tags:
+    - install
+
+- name: macOS | Download 1Password CLI
+  get_url:
+    url: "https://cache.agilebits.com/dist/1P/op/pkg/v{{ op_version }}/op_apple_universal_v{{ op_version }}.pkg"
+    dest: "~/.cache/fae/op/op_v{{ op_version }}.pkg"
+  when:
+    - op.rc != 0
+    - ansible_distribution == "MacOSX"
+  tags:
+    - install
+
+- name: macOS | Install 1Password CLI
+  command: "installer -package {{ ansible_env.HOME }}/.cache/fae/op/op_v{{ op_version }}.pkg -target /"
+  become: true
+  when:
+    - op.rc != 0
+    - ansible_distribution == "MacOSX"
+  tags:
+    - install
