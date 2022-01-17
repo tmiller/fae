@@ -20,6 +20,14 @@
   tags:
     - config
 
+- name: Check if neovim is installed
+  command: which nvim
+  register: nvim
+  ignore_errors: true
+  changed_when: false
+  tags:
+    - config
+
 - name: Install and Update plugins
   command: >
     nvim --headless +'
@@ -28,5 +36,7 @@
     endif
     call dein#update()'
     +qa!
+  when:
+    - nvim.rc == 0
   tags:
     - config
