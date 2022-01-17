@@ -3,6 +3,7 @@
   command: which op
   register: op
   ignore_errors: true
+  changed_when: false
   tags:
     - install
 

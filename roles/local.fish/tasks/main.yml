@@ -48,6 +48,7 @@
   command: which fish
   register: fish
   ignore_errors: true
+  changed_when: false
   tags:
     - install
     - update
