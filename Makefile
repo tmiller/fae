@@ -59,7 +59,7 @@ AP_TAGS              = --tags $(subst $(space),$(comma),$(strip $(@) $(r)))
 ## Install everything
 .PHONY: all
 all: galaxy | $(VENV_BINS)
-	$(AP) $(AP_FLAGS) --ask-become-pass playbook.yml
+	$(AP) $(AP_FLAGS) playbook.yml
 
 ## Install galaxy requirements
 .PHONY: galaxy
