@@ -12,3 +12,18 @@
     dest: ~/.config/kitty/kitty.conf
   tags:
     - config
+
+- name: macOS | Install kitty
+  homebrew_cask:
+    name: kitty
+    state: present
+  when:
+    - ansible_distribution == "MacOSX"
+
+- name: Ubuntu | Install kitty
+  apt:
+    name: kitty
+    state: present
+  become: true
+  when:
+    - ansible_distribution == "Ubuntu"
