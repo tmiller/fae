@@ -1,5 +1,4 @@
 ---
-
 - name: Lookup config dirs
   local_action:
     module: find
@@ -44,6 +43,20 @@
   tags:
     - config
 
+- name: Install fish on macOS
+  import_tasks: install-macos.yml
+  when:
+    - ansible_distribution == "MacOSX"
+  tags:
+    - install
+
+- name: Install fish on Ubuntu
+  import_tasks: install-ubuntu.yml
+  when:
+    - ansible_distribution == "Ubuntu"
+  tags:
+    - install
+
 - name: Check if fish is installed
   command: which fish
   register: fish
@@ -61,6 +74,16 @@
   tags:
     - install
     - update
+
+- name: Ubuntu | Install curl on Ubuntu
+  apt:
+    name: curl
+    state: present
+  become: true
+  when:
+    - ansible_distribution == "Ubuntu"
+  tags:
+    - config
 
 - name: Install fisher
   shell:

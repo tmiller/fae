@@ -1,0 +1,24 @@
+---
+- name: Ubuntu | Add fish ppa
+  apt_repository:
+    repo: ppa:fish-shell/release-3
+    state: present
+  become: true
+
+- name: Ubuntu | Install fish
+  apt:
+    name: fish
+    state: present
+    update_cache: true
+  become: true
+
+- name: Ubuntu | Lookup default shell
+  command: "awk -F: -v user='{{ ansible_user_id }}' '$1 == user {print $NF}' /etc/passwd"
+  register: default_shell
+  changed_when: false
+
+- name: Ubuntu | Change default shell to fish
+  command: "chsh -s /usr/bin/fish {{ ansible_user_id }}"
+  become: true
+  when:
+    - default_shell.stdout != "/usr/bin/fish"
