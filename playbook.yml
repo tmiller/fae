@@ -8,11 +8,8 @@
       tags: homebrew
       when: ansible_distribution == "MacOSX"
 
-    - role: local.kitty
-      tags: kitty
-
-    - role: local.fish
-      tags: fish
+    - role: markosamuli.asdf
+      tags: asdf
 
     - role: local.git
       tags: git
@@ -20,11 +17,14 @@
     - role: local.tmux
       tags: tmux
 
+    - role: local.fish
+      tags: fish
+
+    - role: local.kitty
+      tags: kitty
+
     - role: local.neovim
       tags: neovim
-
-    - role: markosamuli.asdf
-      tags: asdf
 
     - role: local.op
       tags: op
