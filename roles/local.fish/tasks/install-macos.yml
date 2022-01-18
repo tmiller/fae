@@ -1,0 +1,25 @@
+---
+- name: macOS | Install fish
+  homebrew:
+    name: fish
+    state: present
+
+- name: macOS | Lookup default shell
+  shell:
+    cmd: "dscl . -read {{ ansible_env.HOME }} UserShell | sed -e 's/UserShell: //'"
+    executable: /bin/bash
+  register: default_shell
+  changed_when: false
+
+- name: macOS | Add fish to /etc/shells
+  lineinfile:
+    path: /etc/shells
+    line: /usr/local/bin/fish
+  become: true
+
+- name: macOS | Change default shell to fish
+  command: "chsh -s /usr/local/bin/fish {{ ansible_user_id }}"
+  become: true
+  register: default_shell
+  when:
+    - default_shell.stdout != "/usr/local/bin/fish"
