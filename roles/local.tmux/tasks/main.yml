@@ -13,6 +13,21 @@
   tags:
     - config
 
+- name: macOS | Install tmux
+  homebrew:
+    name: tmux
+    state: present
+  when:
+    - ansible_distribution == "MacOSX"
+
+- name: Ubuntu | Install tmux
+  apt:
+    name: tmux
+    state: present
+  become: true
+  when:
+    - ansible_distribution == "Ubuntu"
+
 - name: Check if tmux is installed
   command: which tmux
   register: tmux
