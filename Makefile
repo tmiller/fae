@@ -69,12 +69,12 @@ galaxy: | $(VENV_BINS)
 
 ## make ACTION [r=ROLE]
 .PHONY: $(ACTION_TAGS)
-$(ACTION_TAGS): | $(VENV_BINS)
+$(ACTION_TAGS): galaxy | $(VENV_BINS)
 	$(AP) $(AP_FLAGS) $(AP_TAGS) $(AP_SKIP_TAGS) playbook.yml
 
 ## make ROLE
 .PHONY: $(ROLE_TAGS)
-$(ROLE_TAGS): | $(VENV_BINS)
+$(ROLE_TAGS): galaxy | $(VENV_BINS)
 	$(AP) $(AP_FLAGS) $(AP_TAGS) playbook.yml
 
 ## list roles
