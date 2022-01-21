@@ -73,6 +73,7 @@
   register: fisher
   tags:
     - install
+    - config
     - update
 
 - name: Ubuntu | Install curl on Ubuntu
@@ -120,9 +121,9 @@
     cmd: |
       set --universal FZF_LEGACY_KEYBINDINGS 0
       set --universal FZF_FIND_FILE_IGNORE "{.git,.terraform,node_modules,vendor,elm-stuff,deps,_build,target,pkg,Library,.Trash}"
-      set --universal FZF_FIND_FILE_COMMAND "fd --no-ignore --hidden  --type file --exclude '$FZF_FIND_FILE_IGNORE'"
+      set --universal FZF_FIND_FILE_COMMAND "fd --type file --exclude '$FZF_FIND_FILE_IGNORE'"
       set --universal FZF_CD_COMMAND "fd --type directory --exclude '{pkg,Library}'"
-      set --universal FZF_CD_WITH_HIDDEN_COMMAND "fd --hidden --type directory --exclude '{pkg,Library,.Trash}'"
+      set --universal FZF_CD_WITH_HIDDEN_COMMAND "fd --type directory --exclude '{pkg,Library,.Trash}'"
     executable: "{{ fish.stdout }}"
   when:
     - fish.rc == 0
