@@ -47,6 +47,7 @@
   template:
     src: "{{ item }}"
     dest: "{{ ansible_env.HOME }}/.config/gnupg/{{ item | splitext | first }}"
+    mode: "0600"
   loop: "{{ files }}"
   tags:
     - config
