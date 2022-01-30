@@ -23,9 +23,11 @@
   tags:
     - config
 
-- name: Ubuntu | Install gnpug
+- name: Ubuntu | Install gpg
   apt:
-    name: gpg
+    name:
+      - gpg
+      - scdaemon
     state: present
     update_cache: true
   when:
