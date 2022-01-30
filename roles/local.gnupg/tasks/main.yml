@@ -1,0 +1,49 @@
+---
+- name: Lookup config files
+  local_action:
+    module: find
+    paths: "{{ role_path }}/templates"
+    recurse: true
+    pattern: "*.j2"
+  register: full_files_path
+  tags:
+    - config
+
+- name: Set paths relative to role
+  set_fact:
+    files: "{{ full_files_path.files | map(attribute='path') | map('regex_replace', '^' + role_path + '/templates/', '') }}"
+  tags:
+    - config
+
+- name: Create ~/.config/gnupg
+  file:
+    name: "{{ ansible_env.HOME }}/.config/gnupg"
+    state: directory
+  tags:
+    - config
+
+- name: Ubuntu | Install gnpug
+  apt:
+    name: gpg
+    state: present
+    update_cache: true
+  when:
+    - ansible_distribution == "Ubuntu"
+  become: true
+  tags:
+    - install
+
+- name: macOS | Install gpg
+  homebrew:
+    name: gpg
+    state: present
+  when:
+    - ansible_distribution == "MacOSX"
+
+- name: Write config files
+  template:
+    src: "{{ item }}"
+    dest: "{{ ansible_env.HOME }}/.config/gnupg/{{ item | splitext | first }}"
+  loop: "{{ files }}"
+  tags:
+    - config
