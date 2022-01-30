@@ -14,6 +14,9 @@
     - role: local.git
       tags: git
 
+    - role: local.gnupg
+      tags: gnupg
+
     - role: local.neovim
       tags: neovim
 
@@ -25,9 +28,6 @@
 
     - role: local.kitty
       tags: kitty
-
-    - role: local.gnupg
-      tags: gnupg
 
     - role: local.op
       tags: op
