@@ -19,6 +19,7 @@
   file:
     name: "{{ ansible_env.HOME }}/.config/gnupg"
     state: directory
+    mode: "0700"
   tags:
     - config
 
