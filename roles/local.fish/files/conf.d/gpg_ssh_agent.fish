@@ -1,5 +1,8 @@
+# XDG Settings
+set --global --export GNUPGHOME $HOME/.config/gnupg
+
 if status is-interactive
-  set -x GPG_TTY (tty)
-  set -x SSH_AUTH_SOCK (gpgconf --list-dirs agent-ssh-socket)
+  set --global --export GPG_TTY (tty)
+  set --global --export SSH_AUTH_SOCK (gpgconf --list-dirs agent-ssh-socket)
   gpgconf --launch gpg-agent
 end
