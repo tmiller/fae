@@ -3,7 +3,8 @@ fzf_version: 0.27.2
 terraform_version: 1.1.2
 kubectl_version: 1.20.8
 helm_version: 3.7.2
-jsonnet_version: 0.18.0
+jsonnet_version: latest
+dhall_version: latest
 
 asdf_version: v0.9.0
 asdf_init_shell: false
@@ -47,6 +48,11 @@ asdf_plugins:
     global: "{{ jsonnet_version }}"
     versions:
       - "{{ jsonnet_version }}"
+
+  - name: dhall
+    global: "{{ dhall_version }}"
+    versions:
+      - "{{ dhall_version }}"
 
   - name: kubectx
     global: 0.9.4
