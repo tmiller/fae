@@ -1,3 +1,5 @@
-{%- if ansible_distribution == "MacOSX" -%}
+{%- if ansible_distribution == "MacOSX" and ansible_architecture != 'arm64' -%}
 pinentry-program /usr/local/bin/pinentry-mac
+{%- elif ansible_distribution == "MacOSX" and ansible_architecture == 'arm64' -%}
+pinentry-program /opt/homebrew/bin/pinentry-mac
 {% endif %}

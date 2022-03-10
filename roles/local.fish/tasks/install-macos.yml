@@ -16,10 +16,27 @@
     path: /etc/shells
     line: /usr/local/bin/fish
   become: true
+  when:
+    - ansible_architecture != 'arm64'
 
 - name: macOS | Change default shell to fish
   command: "chsh -s /usr/local/bin/fish {{ ansible_user_id }}"
   become: true
-  register: default_shell
   when:
-    - default_shell.stdout != "/usr/local/bin/fish"
+    - default_shell.stdout != '/usr/local/bin/fish'
+    - ansible_architecture != 'arm64'
+
+- name: macOS m1 | Add fish to /etc/shells
+  lineinfile:
+    path: /etc/shells
+    line: /opt/homebrew/bin/fish
+  become: true
+  when:
+    - ansible_architecture == 'arm64'
+
+- name: macOS m1 | Change default shell to fish
+  command: "chsh -s /opt/homebrew/bin/fish {{ ansible_user_id }}"
+  become: true
+  when:
+    - default_shell.stdout != '/opt/homebrew/bin/fish'
+    - ansible_architecture == 'arm64'
