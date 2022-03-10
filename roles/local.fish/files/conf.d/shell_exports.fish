@@ -8,8 +8,11 @@ set --global --export DOCKER_SCAN_SUGGEST false
 set --global --export FZF_DEFAULT_COMMAND $FZF_FIND_FILE_COMMAND
 
 # Setup Path
-if test -x /opt/homebrew/bin
+if test -d /opt/homebrew/bin
   fish_add_path /opt/homebrew/sbin /opt/homebrew/bin
+end
+if test -d $HOME/bin
+  fish_add_path $HOME/bin
 end
 
 # XDG Settings
