@@ -1,33 +1,36 @@
 ---
-fzf_version: 0.27.2
-terraform_version: 1.1.2
-kubectl_version: 1.20.8
-helm_version: 3.7.2
+fzf_version: latest
+terraform_version: latest
+kubectl_version: latest
+helm_version: latest
 jsonnet_version: latest
 dhall_version: latest
+bat_version: latest
+exa_version: latest
 
 asdf_version: v0.9.0
+
 asdf_init_shell: false
 asdf_plugins:
   - name: awscli
-    global: 2.4.6
+    global: latest
     versions:
-      - 2.4.6
+      - latest
 
   - name: bat
-    global: 0.18.3
+    global: latest
     versions:
-      - 0.18.3
+      - latest
 
   - name: exa
-    global: 0.10.1
+    global: latest
     versions:
-      - 0.10.1
+      - latest
 
   - name: fd
-    global: 8.3.0
+    global: latest
     versions:
-      - 8.3.0
+      - latest
 
   - name: fzf
     global: "{{ fzf_version }}"
@@ -55,24 +58,24 @@ asdf_plugins:
       - "{{ dhall_version }}"
 
   - name: kubectx
-    global: 0.9.4
+    global: latest
     versions:
-      - 0.9.4
+      - latest
 
   - name: python
-    global: 3.10.1
+    global: latest
     versions:
-      - 3.10.1
+      - latest
 
   - name: ripgrep
-    global: 13.0.0
+    global: latest
     versions:
-      - 13.0.0
+      - latest
 
   - name: ruby
-    global: 3.0.3
+    global: latest
     versions:
-      - 3.0.3
+      - latest
 
   - name: nodejs
     global: lts
