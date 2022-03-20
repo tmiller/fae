@@ -22,6 +22,11 @@ asdf_plugins:
     versions:
       - latest
 
+  - name: direnv
+    global: latest
+    versions:
+      - latest
+
   - name: exa
     global: latest
     versions:

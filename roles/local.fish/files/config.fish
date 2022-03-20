@@ -9,3 +9,8 @@ if command --query tmux
   and test -z $TMUX
   exec tmux new-session -A -s main
 end 
+
+# If direnv is installed load it
+if command --query direnv
+  direnv hook fish | source
+end
