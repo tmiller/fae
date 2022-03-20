@@ -11,6 +11,15 @@
   tags:
     - config
 
+- name: macOS | Install neovim
+  homebrew:
+    name: neovim
+    state: present
+  when:
+    - ansible_distribution == "MacOSX"
+  tags:
+    - install
+
 - name: Install neovim on Ubuntu
   import_tasks: install-ubuntu.yml
   when:
