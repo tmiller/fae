@@ -11,6 +11,19 @@
   tags:
     - config
 
+- name: Arch | Install neovim
+  pacman:
+    name:
+      - neovim-git
+    executable: paru
+    state: present
+    update_cache: true
+  when:
+    - ansible_distribution == "Archlinux"
+  become: true
+  tags:
+    - install
+
 - name: macOS | Install neovim
   homebrew:
     name: neovim

@@ -1,0 +1,18 @@
+---
+- name: Arch | Install fish
+  pacman:
+    name: fish
+    state: present
+    update_cache: true
+  become: true
+
+- name: Arch | Lookup default shell
+  command: "awk -F: -v user='{{ ansible_user_id }}' '$1 == user {print $NF}' /etc/passwd"
+  register: default_shell
+  changed_when: false
+
+- name: Arch | Change default shell to fish
+  command: "chsh -s /usr/bin/fish {{ ansible_user_id }}"
+  become: true
+  when:
+    - default_shell.stdout != "/usr/bin/fish"

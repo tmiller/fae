@@ -23,6 +23,18 @@
   tags:
     - config
 
+- name: Arch | Install gpg
+  community.general.pacman:
+    name:
+      - gnupg
+    state: present
+    update_cache: true
+  when:
+    - ansible_distribution == "Archlinux"
+  become: true
+  tags:
+    - install
+
 - name: Ubuntu | Install gpg
   apt:
     name:

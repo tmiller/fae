@@ -43,6 +43,13 @@
   tags:
     - config
 
+- name: Install fish on Arch
+  import_tasks: install-arch.yml
+  when:
+    - ansible_distribution == "Archlinux"
+  tags:
+    - install
+
 - name: Install fish on macOS
   import_tasks: install-macos.yml
   when:
