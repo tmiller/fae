@@ -13,6 +13,14 @@
   tags:
     - config
 
+- name: Arch | Install kitty
+  pacman:
+    name: kitty
+    state: present
+  become: true
+  when:
+    - ansible_distribution == "Archlinux"
+
 - name: macOS | Install kitty
   homebrew_cask:
     name: kitty
